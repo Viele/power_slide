@@ -7,22 +7,29 @@ bl_info = {
     "category": "Animation",
 }
 
+import bpy
+from . import operator, menu, typings
+
+_MODULES = [
+    typings,
+    operator,
+    menu,
+]
+
+def _active_slide_changed(self, context):
+    from .utils import slide as _slide_utils
+    _slide_utils.active_slide_changed(context)
+
 
 def register():
-    from . import operator, menu
-    modules = [
-        operator,
-        menu
-    ]
-    for m in modules:
+    bpy.types.Scene.active_slide = bpy.props.IntProperty(update=_active_slide_changed)
+
+    for m in _MODULES:
         m.register_operators()
 
 
 def unregister():
-    from . import operator, menu
-    modules = [
-        operator,
-        menu
-    ]
-    for m in modules:
+    del bpy.types.Scene.active_slide
+
+    for m in reversed(_MODULES):
         m.unregister_operators()

@@ -11,7 +11,7 @@ class PSL_OT_Start_Presentation(bpy.types.Operator):
         context.scene.frame_current = 1
         context.scene.frame_end = 7200 * context.scene.render.fps  # 2hrs should be enough for any presentation
         bpy.ops.screen.animation_play(sync=True)
-        _slide_utils.activate_first_slide(context)
+        _slide_utils.set_slide_index(context, 0)
         return {'FINISHED'}
 
 

@@ -1,4 +1,5 @@
 import bpy
+from . import callbacks as _callbacks
 
 _SLIDE_COLLECTION = "power_slide_slides"
 
@@ -30,20 +31,33 @@ def get_slide(context: bpy.types.Context, name: str) -> bpy.types.LayerCollectio
 
 
 def get_current_slide(context: bpy.types.Context) -> bpy.types.LayerCollection:
-    current_index = context.scene.slide_list_index
+    current_index = context.scene.active_slide
     slide_collection = get_slide_collection(context)
     return slide_collection.children[current_index]
 
 
 def activate_slide(context: bpy.types.Context, slide: bpy.types.LayerCollection):
-    _disable_all_slides(context)
     slide_collection = get_slide_collection(context)
-    context.scene.slide_list_index = slide_collection.children.find(slide.name)
+    # not supported until I find a pre property changed callback
+    # current_slide = slide_collection.children[context.scene.active_slide]
+    # _callbacks.execute(current_slide.collection.on_exit)
+
+    _disable_all_slides(context)
+
+    context.scene.active_slide = slide_collection.children.find(slide.name)
     slide.exclude = False
+    slide.hide_viewport = False
+    _callbacks.execute(slide.collection.on_enter)
+
+
+def active_slide_changed(context: bpy.types.Context):
+    # callback to set things when the prop changed
+    slide_collection = get_slide_collection(context)
+    activate_slide(context, slide_collection.children[context.scene.active_slide])
 
 
 def next_slide(context: bpy.types.Context):
-    current_index = context.scene.slide_list_index
+    current_index = context.scene.active_slide
     slide_collection = get_slide_collection(context)
     if current_index+1 >= len(slide_collection.children):
         # hit last slide
@@ -52,6 +66,5 @@ def next_slide(context: bpy.types.Context):
     activate_slide(context, slide_collection.children[current_index+1])
 
 
-def activate_first_slide(context: bpy.types.Context):
-    first_slide = get_slide_collection(context).children[0]
-    activate_slide(context, first_slide)
+def set_slide_index(context: bpy.types.Context, index: int):
+    context.scene.active_slide = index
