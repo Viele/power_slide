@@ -1,5 +1,3 @@
-import bpy
-
 bl_info = {
     "name": "Power Slide",
     "description": "Slide Presentation but with Blender",
@@ -9,14 +7,22 @@ bl_info = {
     "category": "Animation",
 }
 
-_CLASSES = []
-
 
 def register():
-    for c in _CLASSES:
-        bpy.utils.register_class(c)
+    from . import operator, menu
+    modules = [
+        operator,
+        menu
+    ]
+    for m in modules:
+        m.register_operators()
 
 
 def unregister():
-    for c in _CLASSES:
-        bpy.utils.unregister_class(c)
+    from . import operator, menu
+    modules = [
+        operator,
+        menu
+    ]
+    for m in modules:
+        m.unregister_operators()

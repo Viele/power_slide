@@ -1,6 +1,5 @@
 {
-    "[python]": {
-        "editor.defaultFormatter": "ms-python.autopep8"
+    "python.analysis.diagnosticSeverityOverrides": {
+        "reportShadowedImports": "none",
     },
-    "python.formatting.provider": "none"
 }
