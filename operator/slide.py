@@ -1,13 +1,6 @@
 import bpy
+from ..utils import slide as _slide_utils
 
-_SLIDE_COLLECTION = "power_slide_slides"
-
-def get_slide_collection(scene: bpy.types.Scene):
-    if _SLIDE_COLLECTION in bpy.data.collections:
-        return bpy.data.collections[_SLIDE_COLLECTION]
-    slide_collection = bpy.data.collections.new(_SLIDE_COLLECTION)
-    scene.collection.children.link(slide_collection)
-    return slide_collection
     
 
 class PSL_OT_Create_Slide(bpy.types.Operator):
@@ -16,14 +9,14 @@ class PSL_OT_Create_Slide(bpy.types.Operator):
 
     def execute(self, context: bpy.types.Context):
         slide = bpy.data.collections.new("Slide")
-        slide_collection = get_slide_collection(context.scene)
-        slide_collection.children.link(slide)
+        slide_collection = _slide_utils.get_slide_collection(context)
+        slide_collection.collection.children.link(slide)
         
         return {"FINISHED"}
 
 
 class PSL_OT_Duplicate_Slide(bpy.types.Operator):
-    bl_idname = "ps.duplicate_slide"
+    bl_idname = "psl.duplicate_slide"
     bl_label = "Duplicate Slide"
 
     def execute(self, context: bpy.types.Context):

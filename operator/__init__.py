@@ -1,6 +1,6 @@
 import bpy
 
-from . import slide
+from . import slide, presentation
 
 _CLASSES = (
     slide.PSL_OT_Create_Slide,
@@ -8,7 +8,10 @@ _CLASSES = (
     slide.PSL_OT_Duplicate_Slide,
     slide.PSL_OT_Reorder_Slide,
     slide.PSL_OT_Add_Object_To_Slide,
-    slide.PSL_OT_Remove_Object_From_Slide
+    slide.PSL_OT_Remove_Object_From_Slide,
+    presentation.PSL_OT_Start_Presentation,
+    presentation.PSL_OT_Stop_Presentation,
+    presentation.PSL_OT_Next_Slide,
 )
 
 
