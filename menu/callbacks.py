@@ -14,3 +14,6 @@ class PSL_PT_Callbacks(bpy.types.Panel):
         active_slide = _slide_utils.get_current_slide(context)
         layout.label(text=f"Callbacks for slide: '{active_slide.name}'")
         layout.template_list("PSL_UL_callbacks", "", active_slide.collection.on_enter, "callbacks", active_slide.collection.on_enter, "active_index")
+        row = layout.row()
+        row.operator("psl.create_callback")
+        row.operator("psl.delete_callback")

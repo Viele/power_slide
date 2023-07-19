@@ -1,11 +1,10 @@
 import bpy
-    
+from ..utils import constants as _constants
+
 
 class PSL_Callback(bpy.types.PropertyGroup):
     type: bpy.props.EnumProperty(
-        items=(
-            ('A', "test", "foo"),
-        )
+        items=_constants.CALLBACK_TYPES
     )
     val: bpy.props.IntProperty()
 
