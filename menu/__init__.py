@@ -1,12 +1,13 @@
 import bpy
 
-from . import main_menu
+from . import callbacks, lists, slides
 
 
 _CLASSES = (
-    main_menu.PSL_PT_Slides,
-    main_menu.PSL_UL_collection_list,
-    main_menu.PSL_PT_Callbacks,
+    slides.PSL_PT_Slides,
+    lists.PSL_UL_slides,
+    lists.PSL_UL_callbacks,
+    callbacks.PSL_PT_Callbacks,
 )
 
 

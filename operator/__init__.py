@@ -1,6 +1,6 @@
 import bpy
 
-from . import slide, presentation
+from . import slide, presentation, callbacks
 
 _CLASSES = (
     slide.PSL_OT_Create_Slide,
@@ -12,6 +12,8 @@ _CLASSES = (
     presentation.PSL_OT_Start_Presentation,
     presentation.PSL_OT_Stop_Presentation,
     presentation.PSL_OT_Next_Slide,
+    callbacks.PSL_OT_Create_Callback,
+    callbacks.PSL_OT_Delete_Callback,
 )
 
 

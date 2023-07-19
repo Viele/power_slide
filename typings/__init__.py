@@ -1,10 +1,11 @@
 import bpy
 
-from . import groups
+from . import callback
 
 
 _CLASSES = (
-    groups.PSL_Callback,
+    callback.PSL_Callback,
+    callback.PSL_CallbackGroup,
 )
 
 
@@ -12,8 +13,8 @@ def register_operators():
     for c in _CLASSES:
         bpy.utils.register_class(c)
 
-    bpy.types.Collection.on_enter = bpy.props.CollectionProperty(type=groups.PSL_Callback)
-    bpy.types.Collection.on_exit = bpy.props.CollectionProperty(type=groups.PSL_Callback)
+    bpy.types.Collection.on_enter = bpy.props.PointerProperty(type=callback.PSL_CallbackGroup)
+    bpy.types.Collection.on_exit = bpy.props.PointerProperty(type=callback.PSL_CallbackGroup)
 
 
 def unregister_operators():
