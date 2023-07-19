@@ -1,5 +1,5 @@
 import bpy
-from . import callbacks as _callbacks
+from . import callbacks as _callback_utils
 
 _SLIDE_COLLECTION = "power_slide_slides"
 
@@ -47,7 +47,7 @@ def activate_slide(context: bpy.types.Context, slide: bpy.types.LayerCollection)
     context.scene.active_slide = slide_collection.children.find(slide.name)
     slide.exclude = False
     slide.hide_viewport = False
-    _callbacks.execute(slide.collection.on_enter)
+    _callback_utils.execute(slide.collection.on_enter)
 
 
 def active_slide_changed(context: bpy.types.Context):

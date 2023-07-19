@@ -1,15 +1,18 @@
 import bpy
-from ..utils import slide as _slide_utils, constants as _constants
+from ..utils import slide as _slide_utils, constants as _constants, callbacks as _callback_utils
+
+
+_CALLBACK_LISTS = (
+    ("on_enter", "On Enter", "Executed before the slide is shown"),
+)
 
 
 class PSL_OT_Create_Callback(bpy.types.Operator):
     bl_idname = "psl.create_callback"
     bl_label = "Create Callback"
+
     callback_list : bpy.props.EnumProperty(
-        items=(
-            ("on_enter", "On Enter", "foo"),
-            ("on_exit", "On Exit", "foo"),
-        )
+        items=_CALLBACK_LISTS
     )
     callback_type : bpy.props.EnumProperty(
         items=_constants.CALLBACK_TYPES
@@ -19,6 +22,14 @@ class PSL_OT_Create_Callback(bpy.types.Operator):
         current_slide = _slide_utils.get_current_slide(context)
         item = getattr(current_slide.collection, self.callback_list).callbacks.add()
         item.type = self.callback_type
+
+        callback_object = bpy.data.objects.new("empty", None)
+        callback_list = _callback_utils.get_callback_list(current_slide, self.callback_list)
+        callback_list.collection.objects.link(callback_object)
+        item.callback_object = callback_object
+        callback_object.name = f"_{self.callback_list}_{self.callback_type}"
+        _callback_utils.construct_type_props(callback_object)
+
         return {'FINISHED'}
     
 
@@ -26,6 +37,14 @@ class PSL_OT_Delete_Callback(bpy.types.Operator):
     bl_idname = "psl.delete_callback"
     bl_label = "Delete Callback"
 
+    callback_list : bpy.props.EnumProperty(
+        items=_CALLBACK_LISTS
+    )
+
     def execute(self, context: bpy.types.Context):
-        
+        current_slide = _slide_utils.get_current_slide(context)
+        callback_list = getattr(current_slide.collection, self.callback_list)
+        callback_item = callback_list.callbacks[callback_list.active_index]
+        # del callback_item.callback_data
+        callback_list.callbacks.remove(callback_list.active_index)
         return {'FINISHED'}

@@ -1,6 +1,6 @@
 import bpy
 from bpy.types import Context
-from ..utils import slide as _slide_utils
+from ..utils import slide as _slide_utils, callbacks as _callback_utils
 
 
 class PSL_PT_Callbacks(bpy.types.Panel):
@@ -17,3 +17,7 @@ class PSL_PT_Callbacks(bpy.types.Panel):
         row = layout.row()
         row.operator("psl.create_callback")
         row.operator("psl.delete_callback")
+
+        active_callback = _callback_utils.get_active_callback(context, "on_enter")
+        if active_callback:
+            _callback_utils.draw_callback_props(active_callback, context, layout)
