@@ -1,0 +1,3 @@
+
+class CallbackError(Exception):
+    pass

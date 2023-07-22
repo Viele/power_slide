@@ -1,5 +1,5 @@
 import bpy
-from . import callback_execute as _callback_exec
+from ..callbacks import main as _cb_main
 
 _SLIDE_COLLECTION = "power_slide_slides"
 
@@ -31,7 +31,7 @@ def _set_slide_visibility(slide: bpy.types.LayerCollection):
 
 def _execute_slide_callbacks(slide: bpy.types.LayerCollection, context: bpy.types.Context):
     for callback in slide.collection.on_enter.callbacks:
-        _callback_exec.execute(callback, context)
+        _cb_main.execute(callback, context)
 
 
 def get_slide_collection(context: bpy.types.Context) -> bpy.types.LayerCollection:

@@ -1,7 +1,8 @@
 import typing
 import bpy
 from bpy.types import Context, Event
-from ..utils import slide as _slide_utils, constants as _constants, callbacks as _callback_utils
+from ..utils import slide as _slide_utils
+from ..callbacks import constants as _cb_constants, main as _cb_main
 
 
 _CALLBACK_LISTS = (
@@ -17,14 +18,14 @@ class PSL_OT_Create_Callback(bpy.types.Operator):
         items=_CALLBACK_LISTS
     )
     callback_type : bpy.props.EnumProperty(
-        items=_constants.CALLBACK_TYPES
+        items=_cb_constants.CALLBACK_TYPES
     )
 
     def execute(self, context: bpy.types.Context):   
         current_slide = _slide_utils.get_current_slide(context)
         item = getattr(current_slide.collection, self.callback_list).callbacks.add()
         item.type = self.callback_type
-        _callback_utils.construct_type_props(item)
+        _cb_main.create(item)
 
         return {'FINISHED'}
     

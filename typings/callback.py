@@ -1,14 +1,10 @@
 import bpy
-from ..utils import constants as _constants
-
-
-class CallbackError(Exception):
-    pass
+from ..callbacks import constants as _cb_constants
 
 
 class PSL_Callback(bpy.types.PropertyGroup):
     type: bpy.props.EnumProperty(
-        items=_constants.CALLBACK_TYPES
+        items=_cb_constants.CALLBACK_TYPES
     )
     # keyword "callback" will be added that holds the callback class
 
