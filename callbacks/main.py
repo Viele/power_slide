@@ -4,6 +4,7 @@ from ..typings import callback as _cb_types
 from . import (
     _run_script, 
     _set_text,
+    _play_video,
 )
 
 
@@ -11,6 +12,7 @@ from . import (
 _CALLBACK_TYPE_MAP = {
     _cb_constants.CALLBACK_RUN_SCRIPT: _run_script,
     _cb_constants.CALLBACK_SET_TEXT: _set_text,
+    _cb_constants.CALLBACK_PLAY_VIDEO: _play_video,
 }
 
 def _get_callback_module(type: str):
