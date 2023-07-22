@@ -47,6 +47,9 @@ def activate_slide(context: bpy.types.Context, slide: bpy.types.LayerCollection)
     context.scene.active_slide = slide_collection.children.find(slide.name)
     slide.exclude = False
     slide.hide_viewport = False
+    for child_collection in slide.children:
+        child_collection.exclude = False
+        child_collection.hide_viewport = False
     _callback_utils.execute(slide.collection.on_enter)
 
 

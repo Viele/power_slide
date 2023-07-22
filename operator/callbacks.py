@@ -18,17 +18,11 @@ class PSL_OT_Create_Callback(bpy.types.Operator):
         items=_constants.CALLBACK_TYPES
     )
 
-    def execute(self, context: bpy.types.Context):
+    def execute(self, context: bpy.types.Context):   
         current_slide = _slide_utils.get_current_slide(context)
         item = getattr(current_slide.collection, self.callback_list).callbacks.add()
         item.type = self.callback_type
-
-        callback_object = bpy.data.objects.new("empty", None)
-        callback_list = _callback_utils.get_callback_list(current_slide, self.callback_list)
-        callback_list.collection.objects.link(callback_object)
-        item.callback_object = callback_object
-        callback_object.name = f"_{self.callback_list}_{self.callback_type}"
-        _callback_utils.construct_type_props(callback_object)
+        _callback_utils.construct_type_props(item)
 
         return {'FINISHED'}
     
@@ -44,7 +38,5 @@ class PSL_OT_Delete_Callback(bpy.types.Operator):
     def execute(self, context: bpy.types.Context):
         current_slide = _slide_utils.get_current_slide(context)
         callback_list = getattr(current_slide.collection, self.callback_list)
-        callback_item = callback_list.callbacks[callback_list.active_index]
-        # del callback_item.callback_data
         callback_list.callbacks.remove(callback_list.active_index)
         return {'FINISHED'}

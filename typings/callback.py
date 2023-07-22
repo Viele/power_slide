@@ -6,7 +6,7 @@ class PSL_Callback(bpy.types.PropertyGroup):
     type: bpy.props.EnumProperty(
         items=_constants.CALLBACK_TYPES
     )
-    callback_object: bpy.props.PointerProperty(type=bpy.types.Object)
+    # keyword "callback" will be added that holds the callback class
 
 
 class PSL_CallbackGroup(bpy.types.PropertyGroup):
