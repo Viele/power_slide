@@ -1,18 +1,41 @@
-import abc
 import bpy
 from . import constants as _constants
+from ..typings import callback as _callback_types
 
 
-def _draw_execute_script_callback(callback_prop, context: bpy.types.Context, layout: bpy.types.UILayout):
+def _draw_run_script_callback(
+        callback_prop: _callback_types.PSL_Callback, context: bpy.types.Context, layout: bpy.types.UILayout):
     layout.label(text=callback_prop.type)
     layout.prop_search(callback_prop, '["text"]', bpy.data, "texts")
 
 
-def execute(callbacks):
-    pass
+def draw_callback_props(callback_prop: _callback_types.PSL_Callback, context, layout):
+    draw_function_map = {
+        _constants.CALLBACK_RUN_SCRIPT: _draw_run_script_callback,
+    }
+    draw_fn = draw_function_map.get(callback_prop.type)
+    if draw_fn:
+        draw_fn(callback_prop, context, layout)
 
 
-def get_active_callback(context: bpy.types.Context, list_name: str):
+def _execute_run_script_callback(callback_prop: _callback_types.PSL_Callback):
+    text_object = callback_prop["text"]
+    if not text_object:
+        raise RuntimeError("No text defined, cannot run callback")
+    exec(text_object.as_string())
+
+
+def execute(callback_prop: _callback_types.PSL_Callback):
+    execute_function_map = {
+        _constants.CALLBACK_RUN_SCRIPT: _execute_run_script_callback,
+    }
+    execute_function = execute_function_map.get(callback_prop.type)
+    if not execute_function:
+        raise RuntimeError(f"No execution function defined for {callback_prop.type}")
+    execute_function(callback_prop)
+
+
+def get_active_callback(context: bpy.types.Context, list_name: str) -> _callback_types.PSL_Callback:
     from . import slide as _slide_utils
     current_slide = _slide_utils.get_current_slide(context)
     
@@ -22,7 +45,7 @@ def get_active_callback(context: bpy.types.Context, list_name: str):
     return callback_list.callbacks[callback_list.active_index]
 
 
-def construct_type_props(callback_object):
+def construct_type_props(callback_prop: _callback_types.PSL_Callback):
     """ Dynamically create properties needed for this type of callback"""
     # assumes type is already set on callback_object
     properties_map = {
@@ -30,21 +53,12 @@ def construct_type_props(callback_object):
             ("text", None),
         ),
     }
-    callback_properties = properties_map.get(callback_object.type, {})
+    callback_properties = properties_map.get(callback_prop.type, {})
     for name, prop_value in callback_properties:
-        callback_object[name] = prop_value
+        callback_prop[name] = prop_value
 
 
-def draw_callback_props(callback_prop, context, layout):
-    draw_function_map = {
-        _constants.CALLBACK_RUN_SCRIPT: _draw_execute_script_callback,
-    }
-    draw_fn = draw_function_map.get(callback_prop.type)
-    if draw_fn:
-        draw_fn(callback_prop, context, layout)
-
-
-def get_callback_list(slide: bpy.types.LayerCollection, list_name: str):
+def get_callback_list(slide: bpy.types.LayerCollection, list_name: str) -> _callback_types.PSL_CallbackGroup:
     if list_name in slide.children:
         return slide.children[list_name]
     
