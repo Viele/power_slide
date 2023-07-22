@@ -12,15 +12,12 @@ def _disable_all_slides(context: bpy.types.Context):
 
 def _activate_slide(context: bpy.types.Context, slide: bpy.types.LayerCollection):
     slide_collection = get_slide_collection(context)
-    # not supported until I find a pre property changed callback
-    # current_slide = slide_collection.children[context.scene.active_slide]
-    # _callbacks.execute(current_slide.collection.on_exit)
 
     _disable_all_slides(context)
 
     context.scene.active_slide = slide_collection.children.find(slide.name)
     _set_slide_visibility(slide)
-    _execute_slide_callbacks(slide)
+    _execute_slide_callbacks(slide, context)
 
 
 def _set_slide_visibility(slide: bpy.types.LayerCollection):
@@ -32,9 +29,9 @@ def _set_slide_visibility(slide: bpy.types.LayerCollection):
         child_collection.hide_viewport = False
 
 
-def _execute_slide_callbacks(slide: bpy.types.LayerCollection):
+def _execute_slide_callbacks(slide: bpy.types.LayerCollection, context: bpy.types.Context):
     for callback in slide.collection.on_enter.callbacks:
-        _callback_exec.execute(callback)
+        _callback_exec.execute(callback, context)
 
 
 def get_slide_collection(context: bpy.types.Context) -> bpy.types.LayerCollection:
@@ -66,7 +63,9 @@ def get_current_slide(context: bpy.types.Context) -> bpy.types.LayerCollection:
 def active_slide_changed(context: bpy.types.Context):
     # callback to set things when the prop changed
     slide_collection = get_slide_collection(context)
-    _set_slide_visibility(slide_collection.children[context.scene.active_slide])
+    slide = slide_collection.children[context.scene.active_slide]
+    _set_slide_visibility(slide)
+    _execute_slide_callbacks(slide, context)
 
 
 def next_slide(context: bpy.types.Context):

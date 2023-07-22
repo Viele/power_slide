@@ -1,4 +1,6 @@
+import typing
 import bpy
+from bpy.types import Context, Event
 from ..utils import slide as _slide_utils, constants as _constants, callbacks as _callback_utils
 
 
@@ -25,6 +27,10 @@ class PSL_OT_Create_Callback(bpy.types.Operator):
         _callback_utils.construct_type_props(item)
 
         return {'FINISHED'}
+    
+    def invoke(self, context: Context, event: Event):
+        wm = context.window_manager
+        return wm.invoke_props_dialog(self)
     
 
 class PSL_OT_Delete_Callback(bpy.types.Operator):

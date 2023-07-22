@@ -20,6 +20,10 @@ def construct_type_props(callback_prop: _callback_types.PSL_Callback):
         _constants.CALLBACK_RUN_SCRIPT: (
             ("text", None),
         ),
+        _constants.CALLBACK_SET_TEXT: (
+            ("text", ""),
+            ("text_object", None),
+        )
     }
     callback_properties = properties_map.get(callback_prop.type, {})
     for name, prop_value in callback_properties:

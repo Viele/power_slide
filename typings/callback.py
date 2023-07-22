@@ -2,6 +2,10 @@ import bpy
 from ..utils import constants as _constants
 
 
+class CallbackError(Exception):
+    pass
+
+
 class PSL_Callback(bpy.types.PropertyGroup):
     type: bpy.props.EnumProperty(
         items=_constants.CALLBACK_TYPES
