@@ -1,5 +1,5 @@
 import bpy
-from . import callbacks as _callback_utils
+from . import callback_execute as _callback_exec
 
 _SLIDE_COLLECTION = "power_slide_slides"
 
@@ -8,6 +8,33 @@ def _disable_all_slides(context: bpy.types.Context):
     slide_collection = get_slide_collection(context)
     for child in slide_collection.children:
         child.exclude = True
+
+
+def _activate_slide(context: bpy.types.Context, slide: bpy.types.LayerCollection):
+    slide_collection = get_slide_collection(context)
+    # not supported until I find a pre property changed callback
+    # current_slide = slide_collection.children[context.scene.active_slide]
+    # _callbacks.execute(current_slide.collection.on_exit)
+
+    _disable_all_slides(context)
+
+    context.scene.active_slide = slide_collection.children.find(slide.name)
+    _set_slide_visibility(slide)
+    _execute_slide_callbacks(slide)
+
+
+def _set_slide_visibility(slide: bpy.types.LayerCollection):
+    slide.exclude = False
+    slide.hide_viewport = False
+
+    for child_collection in slide.children:
+        child_collection.exclude = False
+        child_collection.hide_viewport = False
+
+
+def _execute_slide_callbacks(slide: bpy.types.LayerCollection):
+    for callback in slide.collection.on_enter.callbacks:
+        _callback_exec.execute(callback)
 
 
 def get_slide_collection(context: bpy.types.Context) -> bpy.types.LayerCollection:
@@ -36,34 +63,10 @@ def get_current_slide(context: bpy.types.Context) -> bpy.types.LayerCollection:
     return slide_collection.children[current_index]
 
 
-def activate_slide(context: bpy.types.Context, slide: bpy.types.LayerCollection):
-    slide_collection = get_slide_collection(context)
-    # not supported until I find a pre property changed callback
-    # current_slide = slide_collection.children[context.scene.active_slide]
-    # _callbacks.execute(current_slide.collection.on_exit)
-
-    _disable_all_slides(context)
-
-    context.scene.active_slide = slide_collection.children.find(slide.name)
-    set_slide_visibility(slide)
-
-
-def set_slide_visibility(slide: bpy.types.LayerCollection):
-    slide.exclude = False
-    slide.hide_viewport = False
-
-    for child_collection in slide.children:
-        child_collection.exclude = False
-        child_collection.hide_viewport = False
-
-    for callback in slide.collection.on_enter.callbacks:
-        _callback_utils.execute(callback)
-
-
 def active_slide_changed(context: bpy.types.Context):
     # callback to set things when the prop changed
     slide_collection = get_slide_collection(context)
-    set_slide_visibility(slide_collection.children[context.scene.active_slide])
+    _set_slide_visibility(slide_collection.children[context.scene.active_slide])
 
 
 def next_slide(context: bpy.types.Context):
@@ -73,8 +76,9 @@ def next_slide(context: bpy.types.Context):
         # hit last slide
         return
     
-    activate_slide(context, slide_collection.children[current_index+1])
+    _activate_slide(context, slide_collection.children[current_index+1])
 
 
 def set_slide_index(context: bpy.types.Context, index: int):
+    # The visibility will be set by the callback on the prop
     context.scene.active_slide = index
