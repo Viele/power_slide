@@ -65,6 +65,8 @@ def get_current_slide(context: bpy.types.Context) -> bpy.types.LayerCollection:
 def active_slide_changed(context: bpy.types.Context):
     # callback to set things when the prop changed
     slide_collection = get_slide_collection(context)
+    if not slide_collection.children:
+        return
     slide = slide_collection.children[context.scene.active_slide]
     _disable_all_slides(context)
     _set_slide_visibility(slide)

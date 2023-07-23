@@ -28,10 +28,13 @@ class PSL_OT_Delete_Slide(bpy.types.Operator):
     bl_label = "Delete Slide"
 
     def execute(self, context: bpy.types.Context):
-        collection_names = []
-        for name in collection_names:
-            collection = bpy.data.collections.get(name)
-            bpy.data.collections.remove(collection)
+        current_index = context.scene.active_slide
+        slide_collection = _slide_utils.get_slide_collection(context)
+        current_slide = slide_collection.collection.children[current_index]
+        slide_collection.collection.children.unlink(current_slide)
+        bpy.data.collections.remove(current_slide)
+        if current_index > 0 and current_index >= len(slide_collection.collection.children):
+            context.scene.active_slide -= 1
         return {"FINISHED"}
 
 
