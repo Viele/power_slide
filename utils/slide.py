@@ -57,6 +57,8 @@ def get_slide(context: bpy.types.Context, name: str) -> bpy.types.LayerCollectio
 def get_current_slide(context: bpy.types.Context) -> bpy.types.LayerCollection:
     current_index = context.scene.active_slide
     slide_collection = get_slide_collection(context)
+    if not slide_collection.children:
+        return
     return slide_collection.children[current_index]
 
 

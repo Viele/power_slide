@@ -9,6 +9,9 @@ from ..callbacks import main as _cb_main
 
 def _draw_callback_gui(context: bpy.types.Context, layout: bpy.types.UILayout, callback_list: str):
     active_slide = _slide_utils.get_current_slide(context)
+    if not active_slide:
+        layout.label(text="No active slide")
+        return
     layout.label(text=f"Callbacks for slide: '{active_slide.name}'")
     row = layout.row()
     row.template_list(
