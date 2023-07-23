@@ -14,10 +14,15 @@ class PSL_PT_Slides(bpy.types.Panel):
         layout = self.layout
         # layout.operator_context = "INVOKE_DEFAULT"
         slide_collection = _slide_utils.get_slide_collection(context)
-        layout.template_list("PSL_UL_slides", "", slide_collection.collection, "children", context.scene, "active_slide")
         row = layout.row()
-        row.operator("psl.create_slide")
-        row.operator("psl.delete_slide")
+        row.template_list("PSL_UL_slides", "", slide_collection.collection, "children", context.scene, "active_slide")
+        col = row.column()
+        col.operator("psl.create_slide", icon='ADD', text="")
+        col.operator("psl.delete_slide", icon='REMOVE', text="")
+
+        col.separator()
+        col.operator("psl.reorder_slide", icon='TRIA_UP', text="").direction = 'UP'
+        col.operator("psl.reorder_slide", icon='TRIA_DOWN', text="").direction = 'DOWN'
 
         row = layout.row()
         row.operator("psl.start_presentation")

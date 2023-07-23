@@ -39,6 +39,27 @@ class PSL_OT_Reorder_Slide(bpy.types.Operator):
     bl_idname = "psl.reorder_slide"
     bl_label = "Reorder Slide"
 
+    direction: bpy.props.EnumProperty(items=(
+        ('UP', "Up", "Move slide up in the list"),
+        ('DOWN', "Down", "Move slide down in the list"),
+    ))
+
+    def execute(self, context: bpy.types.Context):
+        current_index = context.scene.active_slide
+        target_index = current_index - 1 if self.direction == 'UP' else current_index + 1
+
+        slide_collection = _slide_utils.get_slide_collection(context)
+        if target_index < 0 or target_index > len(slide_collection.children):
+            return {'CANCELLED'}
+        slides = slide_collection.collection.children[:]
+        slides[current_index], slides[target_index] = slides[target_index], slides[current_index]
+        for slide in slides:
+            slide_collection.collection.children.unlink(slide)
+            slide_collection.collection.children.link(slide)
+
+        context.scene.active_slide = target_index
+        return {'FINISHED'}
+
 
 class PSL_OT_Add_Object_To_Slide(bpy.types.Operator):
     bl_idname = "psl.add_object_to_slide"

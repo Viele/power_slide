@@ -9,6 +9,7 @@ bl_info = {
 
 import bpy
 from . import operator, menu, typings
+from .utils import slide as _slide_utils
 
 _MODULES = [
     typings,
@@ -16,13 +17,15 @@ _MODULES = [
     menu,
 ]
 
+
 def _active_slide_changed(self, context):
-    from .utils import slide as _slide_utils
     _slide_utils.active_slide_changed(context)
 
 
 def register():
-    bpy.types.Scene.active_slide = bpy.props.IntProperty(update=_active_slide_changed)
+    bpy.types.Scene.active_slide = bpy.props.IntProperty(
+        update=_active_slide_changed
+    )
 
     for m in _MODULES:
         m.register_operators()

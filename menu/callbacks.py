@@ -36,14 +36,3 @@ class PSL_PT_Callbacks_On_Enter(bpy.types.Panel):
     def draw(self, context: bpy.types.Context):
         layout = self.layout
         _draw_callback_gui(context, layout, "on_enter")
-
-
-class PSL_PT_Callbacks_On_Exit(bpy.types.Panel):
-    bl_space_type = "VIEW_3D"
-    bl_region_type = "UI"
-    bl_label = "Callbacks - On Exit"
-    bl_category = "Power Slide"
-
-    def draw(self, context: bpy.types.Context):
-        layout = self.layout
-        _draw_callback_gui(context, layout, "on_exit")
