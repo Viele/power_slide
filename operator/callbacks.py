@@ -5,9 +5,7 @@ from ..utils import slide as _slide_utils
 from ..callbacks import constants as _cb_constants, main as _cb_main
 
 
-_CALLBACK_LISTS = (
-    ("on_enter", "On Enter", "Executed before the slide is shown"),
-)
+
 
 
 class PSL_OT_Create_Callback(bpy.types.Operator):
@@ -15,7 +13,7 @@ class PSL_OT_Create_Callback(bpy.types.Operator):
     bl_label = "Create Callback"
 
     callback_list : bpy.props.EnumProperty(
-        items=_CALLBACK_LISTS
+        items=_cb_constants.CALLBACK_LISTS
     )
     callback_type : bpy.props.EnumProperty(
         items=_cb_constants.CALLBACK_TYPES
@@ -39,7 +37,7 @@ class PSL_OT_Delete_Callback(bpy.types.Operator):
     bl_label = "Delete Callback"
 
     callback_list : bpy.props.EnumProperty(
-        items=_CALLBACK_LISTS
+        items=_cb_constants.CALLBACK_LISTS
     )
 
     def execute(self, context: bpy.types.Context):

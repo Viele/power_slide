@@ -11,3 +11,9 @@ CALLBACK_TYPES = (
     (CALLBACK_PLAY_VIDEO, "Play Video", "Play the given video"),
     (CALLBACK_SET_CAMERA, "Set Camera", "Set the active scene camera"),
 )
+
+# different lists of callbacks that are execute at different points in time
+CALLBACK_LISTS = (
+    ("on_enter", "On Enter", "Executed before the slide is shown"),
+    ("on_exit", "On Exit", "Execute just before going to the next slide")
+)

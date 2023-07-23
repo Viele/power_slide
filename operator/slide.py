@@ -20,12 +20,7 @@ class PSL_OT_Duplicate_Slide(bpy.types.Operator):
     bl_label = "Duplicate Slide"
 
     def execute(self, context: bpy.types.Context):
-        collection_names = []
-        for name in collection_names:
-            collection = bpy.data.collections.get(name)
-            context.scene.collection.children.unlink(collection)
-            bpy.data.collections.remove(collection)
-        return {"FINISHED"}
+        pass
 
 
 class PSL_OT_Delete_Slide(bpy.types.Operator):

@@ -1,6 +1,7 @@
 import bpy
 
 from . import callback
+from ..callbacks import constants as _cb_constants
 
 
 _CLASSES = (
@@ -13,13 +14,13 @@ def register_operators():
     for c in _CLASSES:
         bpy.utils.register_class(c)
 
-    bpy.types.Collection.on_enter = bpy.props.PointerProperty(type=callback.PSL_CallbackGroup)
-    bpy.types.Collection.on_exit = bpy.props.PointerProperty(type=callback.PSL_CallbackGroup)
+    for enum_item in _cb_constants.CALLBACK_LISTS:
+        setattr(bpy.types.Collection, enum_item[0], bpy.props.PointerProperty(type=callback.PSL_CallbackGroup))
 
 
 def unregister_operators():
-    del bpy.types.Collection.on_enter
-    del bpy.types.Collection.on_exit
+    for enum_item in reversed(_cb_constants.CALLBACK_LISTS):
+        delattr(bpy.types.Collection, enum_item[0])
 
     for c in reversed(_CLASSES):
         bpy.utils.unregister_class(c)
