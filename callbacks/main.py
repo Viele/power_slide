@@ -5,6 +5,7 @@ from ._callback_modules import (
     play_video,
     run_script,
     set_text,
+    set_camera,
 )
 
 
@@ -13,7 +14,9 @@ _CALLBACK_TYPE_MAP = {
     _cb_constants.CALLBACK_RUN_SCRIPT: run_script,
     _cb_constants.CALLBACK_SET_TEXT: set_text,
     _cb_constants.CALLBACK_PLAY_VIDEO: play_video,
+    _cb_constants.CALLBACK_SET_CAMERA: set_camera,
 }
+
 
 def _get_callback_module(type: str):
     callback_module = _CALLBACK_TYPE_MAP.get(type)
