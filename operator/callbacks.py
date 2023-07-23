@@ -24,7 +24,8 @@ class PSL_OT_Create_Callback(bpy.types.Operator):
         item = getattr(current_slide.collection, self.callback_list).callbacks.add()
         item.type = self.callback_type
         _cb_main.create(item)
-
+        for region in context.area.regions:
+            region.tag_redraw()
         return {'FINISHED'}
     
     def invoke(self, context: Context, event: Event):

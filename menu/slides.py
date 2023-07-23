@@ -2,15 +2,11 @@ import bpy
 from ..utils import slide as _slide_utils
 
 
-class PSL_PT_Slide_Templates(bpy.types.Panel):
-    bl_space_type = "VIEW_3D"
-    bl_region_type = "UI"
-    bl_label = "Slide Templates"
-    bl_category = "Power Slide"
-
-    def draw(self, context: bpy.types.Context):
-        layout = self.layout
-        layout.label(text="Test")
+class PSL_UL_slides(bpy.types.UIList):
+    def draw_item(self, context, layout, data, item, icon, active_data, active_propname, index):
+        # split = layout.split(factor=0.2)
+        # split.label(text="Slide: {index}".format(index=index))
+        layout.prop(item, "name")
 
 
 class PSL_PT_Slides(bpy.types.Panel):

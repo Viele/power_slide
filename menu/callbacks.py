@@ -7,6 +7,12 @@ from ..utils import (
 from ..callbacks import main as _cb_main
 
 
+class PSL_UL_callbacks(bpy.types.UIList):
+    def draw_item(self, context, layout, data, item, icon, active_data, active_propname, index):
+        item_text = _cb_main.get_list_name(item)
+        layout.label(text=item_text)
+
+
 def _draw_callback_gui(context: bpy.types.Context, layout: bpy.types.UILayout, callback_list: str):
     active_slide = _slide_utils.get_current_slide(context)
     if not active_slide:

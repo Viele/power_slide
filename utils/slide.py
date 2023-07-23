@@ -40,7 +40,11 @@ def get_slide_collection(context: bpy.types.Context) -> bpy.types.LayerCollectio
     if _SLIDE_COLLECTION in view_layer.layer_collection.children:
         return view_layer.layer_collection.children[_SLIDE_COLLECTION]
     
-    slide_collection = bpy.data.collections.new(_SLIDE_COLLECTION)
+    if _SLIDE_COLLECTION in bpy.data.collections:
+        slide_collection = bpy.data.collections[_SLIDE_COLLECTION]
+    else:
+        slide_collection = bpy.data.collections.new(_SLIDE_COLLECTION)
+        
     view_layer.layer_collection.collection.children.link(slide_collection)
 
     return view_layer.layer_collection.children[_SLIDE_COLLECTION]

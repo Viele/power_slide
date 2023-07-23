@@ -26,6 +26,7 @@ def register():
     bpy.types.Scene.active_slide = bpy.props.IntProperty(
         update=_active_slide_changed
     )
+    bpy.types.Scene.active_slide_template = bpy.props.IntProperty()
 
     for m in _MODULES:
         m.register_operators()
