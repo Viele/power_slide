@@ -10,13 +10,3 @@ def get_active_callback(context: bpy.types.Context, list_name: str) -> _cb_types
     if len(callback_list.callbacks) == 0:
         return
     return callback_list.callbacks[callback_list.active_index]
-
-
-def get_callback_list(slide: bpy.types.LayerCollection, list_name: str) -> _cb_types.PSL_CallbackGroup:
-    if list_name in slide.children:
-        return slide.children[list_name]
-    
-    callback_list = bpy.data.collections.new(list_name)
-    slide.collection.children.link(callback_list)
-
-    return slide.children[list_name]
