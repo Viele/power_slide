@@ -1,18 +1,18 @@
 import bpy
 from . import constants as _cb_constants, errors as _cb_errors
 from ..typings import callback as _cb_types
-from . import (
-    _run_script, 
-    _set_text,
-    _play_video,
+from ._callback_modules import (
+    play_video,
+    run_script,
+    set_text,
 )
 
 
 # files in here are expected to have the following functions: create, draw, execute
 _CALLBACK_TYPE_MAP = {
-    _cb_constants.CALLBACK_RUN_SCRIPT: _run_script,
-    _cb_constants.CALLBACK_SET_TEXT: _set_text,
-    _cb_constants.CALLBACK_PLAY_VIDEO: _play_video,
+    _cb_constants.CALLBACK_RUN_SCRIPT: run_script,
+    _cb_constants.CALLBACK_SET_TEXT: set_text,
+    _cb_constants.CALLBACK_PLAY_VIDEO: play_video,
 }
 
 def _get_callback_module(type: str):
@@ -39,3 +39,8 @@ def execute(callback_prop: _cb_types.PSL_Callback, context: bpy.types.Context):
 def draw(callback_prop: _cb_types.PSL_Callback, context: bpy.types.Context, layout):
     callback_module = _get_callback_module(callback_prop.type)
     callback_module.draw(callback_prop, context, layout)
+
+
+def get_list_name(callback_prop: _cb_types.PSL_Callback) -> str:
+    callback_module = _get_callback_module(callback_prop.type)
+    return callback_module.get_list_name(callback_prop)

@@ -2,25 +2,10 @@
 CALLBACK_RUN_SCRIPT = 'RUN_SCRIPT'
 CALLBACK_SET_TEXT = 'SET_TEXT'
 CALLBACK_PLAY_VIDEO = 'PLAY_VIDEO'
-CALLBACK_PAUSE_VIDEO = 'PAUSE_VIDEO'
-
-CALLBACK_LABEL_RUN_SCRIPT = "Run Script"
-CALLBACK_LABEL_SET_TEXT = "Set Text"
-CALLBACK_LABEL_PLAY_VIDEO = "Play Video"
-CALLBACK_LABEL_PAUSE_VIDEO = "Pause Video"
-
-# because I couldn't find out how to draw the prop as readonly or get the name of the enum
-CALLBACK_LABEL_MAP = {
-    CALLBACK_RUN_SCRIPT: CALLBACK_LABEL_RUN_SCRIPT,
-    CALLBACK_SET_TEXT: CALLBACK_LABEL_SET_TEXT,
-    CALLBACK_PLAY_VIDEO: CALLBACK_LABEL_PLAY_VIDEO,
-    CALLBACK_PAUSE_VIDEO: CALLBACK_LABEL_PAUSE_VIDEO,
-}
 
 # used as enum property items
 CALLBACK_TYPES = (
-    (CALLBACK_RUN_SCRIPT, CALLBACK_LABEL_RUN_SCRIPT, "Execute the given text"),
-    (CALLBACK_SET_TEXT, CALLBACK_LABEL_SET_TEXT, "Set the text of a text object"),
-    (CALLBACK_PLAY_VIDEO, CALLBACK_LABEL_PLAY_VIDEO, "Play the given video"),
-    (CALLBACK_PAUSE_VIDEO, CALLBACK_LABEL_PAUSE_VIDEO, "Pause the video playback"),
+    (CALLBACK_RUN_SCRIPT, "Run Script", "Execute the given text"),
+    (CALLBACK_SET_TEXT, "Set Text", "Set the text of a text object"),
+    (CALLBACK_PLAY_VIDEO, "Play Video", "Play the given video"),
 )
