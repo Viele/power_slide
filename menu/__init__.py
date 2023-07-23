@@ -4,9 +4,9 @@ from . import callbacks, lists, slides
 
 
 _CLASSES = (
-    slides.PSL_PT_Slides,
     lists.PSL_UL_slides,
     lists.PSL_UL_callbacks,
+    slides.PSL_PT_Slides,
     callbacks.PSL_PT_Callbacks_On_Enter,
 )
 
