@@ -10,15 +10,14 @@ from ..callbacks import main as _cb_main
 def _draw_callback_gui(context: bpy.types.Context, layout: bpy.types.UILayout, callback_list: str):
     active_slide = _slide_utils.get_current_slide(context)
     layout.label(text=f"Callbacks for slide: '{active_slide.name}'")
-    layout.template_list(
+    row = layout.row()
+    row.template_list(
         "PSL_UL_callbacks", "", 
         getattr(active_slide.collection, callback_list), "callbacks", 
         getattr(active_slide.collection, callback_list), "active_index")
-    row = layout.row()
-    op = row.operator("psl.create_callback")
-    op.callback_list = callback_list
-    op = row.operator("psl.delete_callback")
-    op.callback_list = callback_list
+    col = row.column()
+    col.operator("psl.create_callback", icon='ADD', text="").callback_list = callback_list
+    col.operator("psl.delete_callback", icon='REMOVE', text="").callback_list = callback_list
 
     callbacks = _callback_utils.get_callbacks(context, callback_list)
     for cb in callbacks:
