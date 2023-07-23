@@ -17,6 +17,7 @@ _CLASSES = (
     slide_template.PSL_OT_Create_Slide_Template,
     slide_template.PSL_OT_Delete_Slide_Template,
     slide_template.PSL_OT_Add_Template_To_Slide,
+    slide_template.PSL_OT_Remove_Template_from_Slide,
 )
 
 

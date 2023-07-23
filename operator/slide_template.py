@@ -61,3 +61,27 @@ class PSL_OT_Add_Template_To_Slide(bpy.types.Operator):
     def invoke(self, context: bpy.types.Context, event: bpy.types.Event):
         wm = context.window_manager
         return wm.invoke_props_dialog(self)
+    
+
+class PSL_OT_Remove_Template_from_Slide(bpy.types.Operator):
+    bl_idname = "psl.remove_template_from_slide"
+    bl_label = "Remove Template from Slide"
+
+    def execute(self, context: bpy.types.Context):
+        active_slide = _slide_utils.get_current_slide(context)
+        if not active_slide:
+            return {'CANCELLED'}
+        
+        if not active_slide.collection.children:
+            self.report({'ERROR'}, "No template to remove")
+            return {'CANCELLED'}
+
+        slide_template_index = active_slide.collection["active_template"]
+        template = active_slide.collection.children[slide_template_index]
+
+        if template.name not in active_slide.collection.children:
+            self.report({'ERROR'}, "Template not used on slide")
+            return {'CANCELLED'}
+        
+        active_slide.collection.children.unlink(template)
+        return {'FINISHED'}

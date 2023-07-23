@@ -46,9 +46,10 @@ class PSL_PT_Slide_Assigned_Templates(bpy.types.Panel):
             return []
         row = layout.row()
         row.template_list(
-            "PSL_UL_assigned_templates", "foo", 
+            "PSL_UL_assigned_templates", "", 
             active_slide.collection, "children",
             active_slide.collection, '["active_template"]'
         )
         col = row.column()
         col.operator("psl.add_template_to_slide", icon='ADD', text="")
+        col.operator("psl.remove_template_from_slide", icon='REMOVE', text="")
