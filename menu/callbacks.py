@@ -34,6 +34,7 @@ class PSL_PT_Callbacks_On_Enter(bpy.types.Panel):
     bl_region_type = "UI"
     bl_label = "Callbacks - On Enter"
     bl_category = "Power Slide"
+    bl_parent_id = "PSL_PT_Slides"
 
     def draw(self, context: bpy.types.Context):
         layout = self.layout

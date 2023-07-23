@@ -1,6 +1,16 @@
 import bpy
-from bpy.types import Context
 from ..utils import slide as _slide_utils
+
+
+class PSL_PT_Slide_Templates(bpy.types.Panel):
+    bl_space_type = "VIEW_3D"
+    bl_region_type = "UI"
+    bl_label = "Slide Templates"
+    bl_category = "Power Slide"
+
+    def draw(self, context: bpy.types.Context):
+        layout = self.layout
+        layout.label(text="Test")
 
 
 class PSL_PT_Slides(bpy.types.Panel):
@@ -10,7 +20,7 @@ class PSL_PT_Slides(bpy.types.Panel):
     bl_category = "Power Slide"
 
 
-    def draw(self, context: Context):
+    def draw(self, context: bpy.types.Context):
         layout = self.layout
         # layout.operator_context = "INVOKE_DEFAULT"
         slide_collection = _slide_utils.get_slide_collection(context)

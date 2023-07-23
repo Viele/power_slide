@@ -7,6 +7,7 @@ _CLASSES = (
     lists.PSL_UL_slides,
     lists.PSL_UL_callbacks,
     slides.PSL_PT_Slides,
+    slides.PSL_PT_Slide_Templates,
     callbacks.PSL_PT_Callbacks_On_Enter,
 )
 
