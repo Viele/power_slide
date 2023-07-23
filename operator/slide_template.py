@@ -1,5 +1,5 @@
 import bpy
-from ..utils import slide_template as _template_utils
+from ..utils import slide_template as _template_utils, slide as _slide_utils
 
     
 
@@ -20,7 +20,8 @@ class PSL_OT_Delete_Slide_Template(bpy.types.Operator):
     bl_label = "Delete Slide Template"
 
     def execute(self, context: bpy.types.Context):
-        current_index = context.scene.active_slide_template
+        # TODO deleting a template needs to remove it from all slides as well but raise a warning before
+        """current_index = context.scene.active_slide_template
         template_collection = _template_utils.get_slide_template_collection(context)
         if not template_collection.collection.children:
             return
@@ -30,5 +31,33 @@ class PSL_OT_Delete_Slide_Template(bpy.types.Operator):
         # not removing the objects that are within the collection. 
         # If they have no users, they will be cleaned on save/reload
         if current_index > 0 and current_index >= len(template_collection.collection.children):
-            context.scene.active_slide_template -= 1
+            context.scene.active_slide_template -= 1"""
         return {"FINISHED"}
+
+
+class PSL_OT_Add_Template_To_Slide(bpy.types.Operator):
+    bl_idname = "psl.add_template_to_slide"
+    bl_label = "Add Template to Slide"
+
+    template: bpy.props.EnumProperty(
+        name="Templates", 
+        items=_template_utils.get_template_enum
+    )
+
+    def execute(self, context: bpy.types.Context):
+        active_slide = _slide_utils.get_current_slide(context)
+        # going for bpy.data because we only get the name from the enum
+        slide_template = bpy.data.collections[self.template]
+
+        if slide_template.name in active_slide.collection.children:
+            message = f"Template '{slide_template.name}' already assigned to '{active_slide.name}'"
+            self.report({'ERROR'}, message)
+            return {'CANCELLED'}
+        
+        active_slide.collection.children.link(slide_template)
+        return {'FINISHED'}
+    
+
+    def invoke(self, context: bpy.types.Context, event: bpy.types.Event):
+        wm = context.window_manager
+        return wm.invoke_props_dialog(self)

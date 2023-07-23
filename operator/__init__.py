@@ -16,6 +16,7 @@ _CLASSES = (
     callbacks.PSL_OT_Delete_Callback,
     slide_template.PSL_OT_Create_Slide_Template,
     slide_template.PSL_OT_Delete_Slide_Template,
+    slide_template.PSL_OT_Add_Template_To_Slide,
 )
 
 
