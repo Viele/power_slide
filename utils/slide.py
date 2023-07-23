@@ -17,6 +17,7 @@ def _activate_slide(context: bpy.types.Context, slide: bpy.types.LayerCollection
 
     context.scene.active_slide = slide_collection.children.find(slide.name)
     _set_slide_visibility(slide)
+    context.view_layer.active_layer_collection = slide
     _execute_slide_callbacks(slide, context)
 
 
@@ -70,6 +71,7 @@ def active_slide_changed(context: bpy.types.Context):
     slide = slide_collection.children[context.scene.active_slide]
     _disable_all_slides(context)
     _set_slide_visibility(slide)
+    context.view_layer.active_layer_collection = slide
     _execute_slide_callbacks(slide, context)
 
 

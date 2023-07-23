@@ -33,6 +33,8 @@ class PSL_OT_Delete_Slide(bpy.types.Operator):
         current_slide = slide_collection.collection.children[current_index]
         slide_collection.collection.children.unlink(current_slide)
         bpy.data.collections.remove(current_slide)
+        # not removing the objects that are within the collection. 
+        # If they have no users, they will be cleaned on save/reload
         if current_index > 0 and current_index >= len(slide_collection.collection.children):
             context.scene.active_slide -= 1
         return {"FINISHED"}
