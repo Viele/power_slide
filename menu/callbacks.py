@@ -23,6 +23,8 @@ class PSL_PT_Callbacks(bpy.types.Panel):
         row.operator("psl.create_callback")
         row.operator("psl.delete_callback")
 
-        active_callback = _callback_utils.get_active_callback(context, "on_enter")
-        if active_callback:
-            _cb_main.draw(active_callback, context, layout)
+        callbacks = _callback_utils.get_callbacks(context, "on_enter")
+        for cb in callbacks:
+            box = layout.box()
+            box.label(text=_cb_main.get_list_name(cb))
+            _cb_main.draw(cb, context, box)
