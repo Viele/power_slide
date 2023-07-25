@@ -41,4 +41,6 @@ class PSL_OT_Delete_Callback(bpy.types.Operator):
         current_slide = _slide_utils.get_current_slide(context)
         callback_list = getattr(current_slide.collection, self.callback_list)
         callback_list.callbacks.remove(callback_list.active_index)
+        if callback_list.active_index > 0 and callback_list.active_index >= len(callback_list.callbacks):
+            callback_list.active_index -= 1
         return {'FINISHED'}

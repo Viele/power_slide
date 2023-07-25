@@ -85,4 +85,6 @@ class PSL_OT_Remove_Template_from_Slide(bpy.types.Operator):
             return {'CANCELLED'}
         
         _template_utils.remove_template_from_slide(active_slide, template)
+        if slide_template_index > 0 and slide_template_index >= len(template_data.templates):
+            template_data.active_index -= 1
         return {'FINISHED'}
