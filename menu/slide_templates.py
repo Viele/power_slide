@@ -43,7 +43,7 @@ class PSL_PT_Slide_Assigned_Templates(bpy.types.Panel):
         layout = self.layout
         active_slide = _slide_utils.get_current_slide(context)
         if not active_slide:
-            return []
+            return
         row = layout.row()
         row.template_list(
             "PSL_UL_assigned_templates", "", 
