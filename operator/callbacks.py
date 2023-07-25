@@ -1,11 +1,7 @@
-import typing
 import bpy
 from bpy.types import Context, Event
 from ..utils import slide as _slide_utils
 from ..callbacks import constants as _cb_constants, main as _cb_main
-
-
-
 
 
 class PSL_OT_Create_Callback(bpy.types.Operator):

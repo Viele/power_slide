@@ -11,7 +11,6 @@ class PSL_OT_Create_Slide(bpy.types.Operator):
         slide = bpy.data.collections.new("Slide")
         slide_collection = _slide_utils.get_slide_collection(context)
         slide_collection.collection.children.link(slide)
-        slide["active_template"] = 0
         
         return {"FINISHED"}
 

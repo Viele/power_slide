@@ -47,14 +47,14 @@ class PSL_OT_Add_Template_To_Slide(bpy.types.Operator):
     def execute(self, context: bpy.types.Context):
         active_slide = _slide_utils.get_current_slide(context)
         # going for bpy.data because we only get the name from the enum
-        slide_template = bpy.data.collections[self.template]
+        template = bpy.data.collections[self.template]
 
-        if slide_template.name in active_slide.collection.children:
-            message = f"Template '{slide_template.name}' already assigned to '{active_slide.name}'"
+        if template.name in active_slide.collection.children:
+            message = f"Template '{template.name}' already assigned to '{active_slide.name}'"
             self.report({'ERROR'}, message)
             return {'CANCELLED'}
         
-        active_slide.collection.children.link(slide_template)
+        _template_utils.add_template_to_slide(active_slide, template)
         return {'FINISHED'}
     
 
@@ -76,12 +76,13 @@ class PSL_OT_Remove_Template_from_Slide(bpy.types.Operator):
             self.report({'ERROR'}, "No template to remove")
             return {'CANCELLED'}
 
-        slide_template_index = active_slide.collection["active_template"]
-        template = active_slide.collection.children[slide_template_index]
+        template_data = active_slide.collection.template_data
+        slide_template_index = template_data.active_index
+        template = template_data.templates[slide_template_index].template
 
         if template.name not in active_slide.collection.children:
             self.report({'ERROR'}, "Template not used on slide")
             return {'CANCELLED'}
         
-        active_slide.collection.children.unlink(template)
+        _template_utils.remove_template_from_slide(active_slide, template)
         return {'FINISHED'}

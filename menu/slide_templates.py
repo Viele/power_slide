@@ -9,7 +9,7 @@ class PSL_UL_slide_templates(bpy.types.UIList):
 
 class PSL_UL_assigned_templates(bpy.types.UIList):
     def draw_item(self, context, layout, data, item, icon, active_data, active_propname, index):
-        layout.prop(item, "name")
+        layout.prop(item.template, "name")
 
 
 class PSL_PT_Slide_Templates(bpy.types.Panel):
@@ -47,8 +47,8 @@ class PSL_PT_Slide_Assigned_Templates(bpy.types.Panel):
         row = layout.row()
         row.template_list(
             "PSL_UL_assigned_templates", "", 
-            active_slide.collection, "children",
-            active_slide.collection, '["active_template"]'
+            active_slide.collection.template_data, 'templates',
+            active_slide.collection.template_data, 'active_index'
         )
         col = row.column()
         col.operator("psl.add_template_to_slide", icon='ADD', text="")

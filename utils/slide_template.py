@@ -34,3 +34,15 @@ def get_template_enum(scene: bpy.types.Scene, context: bpy.types.Context):
     for template in template_collection.collection.children:
         template_enum.append((template.name, template.name, ""))
     return template_enum
+
+
+def add_template_to_slide(slide: bpy.types.LayerCollection, template: bpy.types.Collection):
+    item = slide.collection.template_data.templates.add()
+    item.template = template
+    slide.collection.children.link(template)
+
+
+def remove_template_from_slide(slide: bpy.types.LayerCollection, template: bpy.types.Collection):
+    template_data = slide.collection.template_data
+    template_data.templates.remove(template_data.active_index)
+    slide.collection.children.unlink(template)
