@@ -6,6 +6,7 @@ from ._callback_modules import (
     run_script,
     set_text,
     set_camera,
+    play_animation,
 )
 
 
@@ -15,6 +16,7 @@ _CALLBACK_TYPE_MAP = {
     _cb_constants.CALLBACK_SET_TEXT: set_text,
     _cb_constants.CALLBACK_PLAY_VIDEO: play_video,
     _cb_constants.CALLBACK_SET_CAMERA: set_camera,
+    _cb_constants.CALLBACK_PLAY_ANIMATION: play_animation,
 }
 
 
