@@ -7,6 +7,7 @@ from ._callback_modules import (
     set_text,
     set_camera,
     play_animation,
+    play_grease_pencil,
 )
 
 
@@ -17,6 +18,7 @@ _CALLBACK_TYPE_MAP = {
     _cb_constants.CALLBACK_PLAY_VIDEO: play_video,
     _cb_constants.CALLBACK_SET_CAMERA: set_camera,
     _cb_constants.CALLBACK_PLAY_ANIMATION: play_animation,
+    _cb_constants.CALLBACK_PLAY_GREASE_PENCIL: play_grease_pencil,
 }
 
 
