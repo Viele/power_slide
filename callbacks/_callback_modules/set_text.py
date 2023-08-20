@@ -24,3 +24,7 @@ def get_list_name(callback_prop) -> str:
     text = callback_prop["text"]
     shortened_text = (text[:32] + "...") if len(text) > 35 else text
     return f"Set Text - {shortened_text}"
+
+
+def pre_start_setup(callback_prop):
+    pass

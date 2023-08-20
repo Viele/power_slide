@@ -12,8 +12,13 @@ def get_active_callback(context: bpy.types.Context, list_name: str) -> _cb_types
     return callback_list.callbacks[callback_list.active_index]
 
 
-def get_callbacks(context: bpy.types.Context, list_name):
+def get_callbacks_from_active_slide(context: bpy.types.Context, list_name: str):
     current_slide = _slide_utils.get_current_slide(context)
 
     callback_list = getattr(current_slide.collection, list_name)
+    return callback_list.callbacks
+
+
+def get_callbacks(slide: bpy.types.LayerCollection, list_name: str):
+    callback_list = getattr(slide.collection, list_name)
     return callback_list.callbacks

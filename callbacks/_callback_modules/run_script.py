@@ -21,3 +21,7 @@ def get_list_name(callback_prop) -> str:
     text_object = callback_prop["text"]
     text = text_object.name if text_object else "None"
     return f"Run Script - {text}"
+
+
+def pre_start_setup(callback_prop):
+    pass

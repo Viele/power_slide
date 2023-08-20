@@ -76,3 +76,13 @@ def get_list_name(callback_prop) -> str:
     action = callback_prop["action"]
     text = action.name if action else "None"
     return f"Play Animation - {text}"
+
+
+def pre_start_setup(callback_prop):
+    ob = callback_prop["object"]
+    action = callback_prop["action"]
+    if not action or not ob:
+        return
+    
+    nla_track = _get_nla_track(ob)
+    nla_track.mute = True

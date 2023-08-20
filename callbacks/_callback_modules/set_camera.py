@@ -21,3 +21,7 @@ def get_list_name(callback_prop) -> str:
     camera_object = callback_prop["camera"]
     text = camera_object.name if camera_object else "None"
     return f"Set Camera - {text}"
+
+
+def pre_start_setup(callback_prop):
+    pass

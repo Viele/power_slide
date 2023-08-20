@@ -28,7 +28,7 @@ def _draw_callback_gui(context: bpy.types.Context, layout: bpy.types.UILayout, c
     col.operator("psl.create_callback", icon='ADD', text="").callback_list = callback_list
     col.operator("psl.delete_callback", icon='REMOVE', text="").callback_list = callback_list
 
-    callbacks = _callback_utils.get_callbacks(context, callback_list)
+    callbacks = _callback_utils.get_callbacks_from_active_slide(context, callback_list)
     for cb in callbacks:
         box = layout.box()
         box.label(text=_cb_main.get_list_name(cb))

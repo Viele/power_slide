@@ -20,3 +20,8 @@ def execute(callback_prop, context: bpy.types.Context):
 def get_list_name(callback_prop) -> str:
     """ Return a nice name that is used in lists. """
     pass
+
+
+def pre_start_setup(callback_prop):
+    """ Setup anything that needs to be done before the presentation is started. """
+    pass

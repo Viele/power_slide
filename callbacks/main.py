@@ -49,3 +49,9 @@ def draw(callback_prop: _cb_types.PSL_Callback, context: bpy.types.Context, layo
 def get_list_name(callback_prop: _cb_types.PSL_Callback) -> str:
     callback_module = _get_callback_module(callback_prop.type)
     return callback_module.get_list_name(callback_prop)
+
+
+def pre_start_setup(callback_prop: _cb_types.PSL_Callback):
+    """ Called before the presentation is run. """
+    callback_module = _get_callback_module(callback_prop.type)
+    callback_module.pre_start_setup(callback_prop)

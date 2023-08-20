@@ -22,3 +22,7 @@ def get_list_name(callback_prop) -> str:
     video = callback_prop["video"]
     text = video.name if video else "None"
     return f"Play Video - {text}"
+
+
+def pre_start_setup(callback_prop):
+    pass
