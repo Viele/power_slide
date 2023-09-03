@@ -1,7 +1,8 @@
+import typing
 import bpy
 from bpy.types import Context
 from ..utils import slide as _slide_utils, callbacks as _callback_utils
-from ..callbacks import constants as _cb_constants, main as _cb_main
+from ..callbacks import main as _cb_main
 
 def _pre_start_setup(context: bpy.types.Context):
     slides = _slide_utils.get_slides(context)
@@ -39,4 +40,13 @@ class PSL_OT_Next_Slide(bpy.types.Operator):
 
     def execute(self, context: Context):
         _slide_utils.next_slide(context)
+        return {'FINISHED'}
+    
+
+class PSL_OT_Previous_Slide(bpy.types.Operator):
+    bl_idname = "psl.previous_slide"
+    bl_label = "Previous Slide"
+
+    def execute(self, context: Context):
+        _slide_utils.previous_slide(context)
         return {'FINISHED'}

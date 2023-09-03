@@ -40,4 +40,6 @@ class PSL_PT_Slides(bpy.types.Panel):
         row.operator("psl.start_presentation")
         row.operator("psl.stop_presentation")
         
-        layout.operator("psl.next_slide")
+        row = layout.row()
+        row.operator("psl.previous_slide")
+        row.operator("psl.next_slide")

@@ -94,6 +94,16 @@ def next_slide(context: bpy.types.Context):
     _activate_slide(context, slide_collection.children[current_index+1])
 
 
+def previous_slide(context: bpy.types.Context):
+    current_index = context.scene.active_slide
+    if current_index - 1 < 0:
+        # hit first slide
+        return
+    
+    slide_collection = get_slide_collection(context)
+    _activate_slide(context, slide_collection.children[current_index-1])
+
+
 def set_slide_index(context: bpy.types.Context, index: int):
     # The visibility will be set by the callback on the prop
     context.scene.active_slide = index

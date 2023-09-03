@@ -12,6 +12,7 @@ _CLASSES = (
     presentation.PSL_OT_Start_Presentation,
     presentation.PSL_OT_Stop_Presentation,
     presentation.PSL_OT_Next_Slide,
+    presentation.PSL_OT_Previous_Slide,
     callbacks.PSL_OT_Create_Callback,
     callbacks.PSL_OT_Delete_Callback,
     slide_template.PSL_OT_Create_Slide_Template,
