@@ -17,6 +17,11 @@ def execute(callback_prop, context: bpy.types.Context):
     pass
 
 
+def cleanup(callback_prop, context: bpy.types.Context):
+    """ Called just before the slide of the callback is left. """
+    pass
+
+
 def get_list_name(callback_prop) -> str:
     """ Return a nice name that is used in lists. """
     pass

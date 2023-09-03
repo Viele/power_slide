@@ -20,6 +20,10 @@ def execute(callback_prop, context: bpy.types.Context):
     text_object.body = text
 
 
+def cleanup(callback_prop, context: bpy.types.Context):
+    pass
+
+
 def get_list_name(callback_prop) -> str:
     text = callback_prop["text"]
     shortened_text = (text[:32] + "...") if len(text) > 35 else text

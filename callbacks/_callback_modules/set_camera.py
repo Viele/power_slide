@@ -17,6 +17,10 @@ def execute(callback_prop, context: bpy.types.Context):
     context.scene.camera = camera
 
 
+def cleanup(callback_prop, context: bpy.types.Context):
+    pass
+
+
 def get_list_name(callback_prop) -> str:
     camera_object = callback_prop["camera"]
     text = camera_object.name if camera_object else "None"

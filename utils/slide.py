@@ -11,17 +11,6 @@ def _disable_all_slides(context: bpy.types.Context):
         child.exclude = True
 
 
-def _activate_slide(context: bpy.types.Context, slide: bpy.types.LayerCollection):
-    slide_collection = get_slide_collection(context)
-
-    _disable_all_slides(context)
-
-    context.scene.active_slide = slide_collection.children.find(slide.name)
-    _set_slide_visibility(slide)
-    context.view_layer.active_layer_collection = slide
-    _execute_slide_callbacks(slide, context)
-
-
 def _set_slide_visibility(slide: bpy.types.LayerCollection):
     slide.exclude = False
     slide.hide_viewport = False
@@ -35,6 +24,12 @@ def _execute_slide_callbacks(slide: bpy.types.LayerCollection, context: bpy.type
     callbacks = _cb_utils.get_callbacks(slide)
     for callback in callbacks:
         _cb_main.execute(callback, context)
+
+
+def _cleanup_slide_callbacks(context: bpy.types.Context, slide: bpy.types.LayerCollection):
+    callbacks = _cb_utils.get_callbacks(slide)
+    for callback in callbacks:
+        _cb_main.cleanup(callback, context)
 
 
 def get_slide_collection(context: bpy.types.Context) -> bpy.types.LayerCollection:
@@ -79,21 +74,31 @@ def active_slide_changed(context: bpy.types.Context):
     slide_collection = get_slide_collection(context)
     if not slide_collection.children:
         return
-    slide = slide_collection.children[context.scene.active_slide]
+    current_index = context.scene.active_slide
+    if current_index < 0 or current_index >= len(slide_collection.children):
+        return
+    
+    previous_index = context.scene.previous_slide
+    _cleanup_slide_callbacks(context, slide_collection.children[previous_index])
+
+    slide = slide_collection.children[current_index]
     _disable_all_slides(context)
     _set_slide_visibility(slide)
     context.view_layer.active_layer_collection = slide
     _execute_slide_callbacks(slide, context)
 
+    context.scene.previous_slide = current_index
+
 
 def next_slide(context: bpy.types.Context):
     current_index = context.scene.active_slide
+    
     slide_collection = get_slide_collection(context)
     if current_index+1 >= len(slide_collection.children):
         # hit last slide
         return
     
-    _activate_slide(context, slide_collection.children[current_index+1])
+    set_slide_index(context, current_index+1)
 
 
 def previous_slide(context: bpy.types.Context):
@@ -102,8 +107,7 @@ def previous_slide(context: bpy.types.Context):
         # hit first slide
         return
     
-    slide_collection = get_slide_collection(context)
-    _activate_slide(context, slide_collection.children[current_index-1])
+    set_slide_index(context, current_index-1)
 
 
 def set_slide_index(context: bpy.types.Context, index: int):

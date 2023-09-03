@@ -41,6 +41,12 @@ def create(callback_prop: _cb_types.PSL_Callback):
 def execute(callback_prop: _cb_types.PSL_Callback, context: bpy.types.Context):
     callback_module = _get_callback_module(callback_prop.type)
     callback_module.execute(callback_prop, context)
+ 
+
+
+def cleanup(callback_prop, context: bpy.types.Context):
+    callback_module = _get_callback_module(callback_prop.type)
+    callback_module.cleanup(callback_prop, context)
 
 
 def draw(callback_prop: _cb_types.PSL_Callback, context: bpy.types.Context, layout):

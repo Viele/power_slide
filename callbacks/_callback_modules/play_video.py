@@ -18,6 +18,10 @@ def execute(callback_prop, context: bpy.types.Context):
     video_object.image_user.frame_start = context.scene.frame_current
 
 
+def cleanup(callback_prop, context: bpy.types.Context):
+    pass
+
+
 def get_list_name(callback_prop) -> str:
     video = callback_prop["video"]
     text = video.name if video else "None"

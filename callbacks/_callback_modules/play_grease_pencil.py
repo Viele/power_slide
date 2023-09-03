@@ -39,6 +39,10 @@ def execute(callback_prop, context: bpy.types.Context):
     modifier.frame_end = callback_prop["range"][1]
 
 
+def cleanup(callback_prop, context: bpy.types.Context):
+    pass
+
+
 def get_list_name(callback_prop) -> str:
     ob = callback_prop["object"]
     text = ob.name if ob else "None"

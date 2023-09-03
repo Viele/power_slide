@@ -17,6 +17,10 @@ def execute(callback_prop, context: bpy.types.Context):
     exec(text_object.as_string())
 
 
+def cleanup(callback_prop, context: bpy.types.Context):
+    pass
+
+
 def get_list_name(callback_prop) -> str:
     text_object = callback_prop["text"]
     text = text_object.name if text_object else "None"

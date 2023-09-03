@@ -72,6 +72,10 @@ def execute(callback_prop, context: bpy.types.Context):
     strip.repeat = 1000 if callback_prop["loop"] else 1
 
 
+def cleanup(callback_prop, context: bpy.types.Context):
+    pass
+
+
 def get_list_name(callback_prop) -> str:
     action = callback_prop["action"]
     text = action.name if action else "None"
