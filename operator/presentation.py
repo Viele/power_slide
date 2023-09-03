@@ -7,7 +7,7 @@ from ..callbacks import main as _cb_main
 def _pre_start_setup(context: bpy.types.Context):
     slides = _slide_utils.get_slides(context)
     for slide in slides:
-        callbacks = _callback_utils.get_callbacks(slide, "on_enter")
+        callbacks = _callback_utils.get_callbacks(slide)
         for cb in callbacks:
             _cb_main.pre_start_setup(cb)
 

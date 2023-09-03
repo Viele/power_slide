@@ -13,7 +13,7 @@ class PSL_UL_callbacks(bpy.types.UIList):
         layout.label(text=item_text)
 
 
-def _draw_callback_gui(context: bpy.types.Context, layout: bpy.types.UILayout, callback_list: str):
+def _draw_callback_gui(context: bpy.types.Context, layout: bpy.types.UILayout):
     active_slide = _slide_utils.get_current_slide(context)
     if not active_slide:
         layout.label(text="No active slide")
@@ -22,26 +22,26 @@ def _draw_callback_gui(context: bpy.types.Context, layout: bpy.types.UILayout, c
     row = layout.row()
     row.template_list(
         "PSL_UL_callbacks", "", 
-        getattr(active_slide.collection, callback_list), "callbacks", 
-        getattr(active_slide.collection, callback_list), "active_index")
+        active_slide.collection.slide_callbacks, "callbacks", 
+        active_slide.collection.slide_callbacks, "active_index")
     col = row.column()
-    col.operator("psl.create_callback", icon='ADD', text="").callback_list = callback_list
-    col.operator("psl.delete_callback", icon='REMOVE', text="").callback_list = callback_list
+    col.operator("psl.create_callback", icon='ADD', text="")
+    col.operator("psl.delete_callback", icon='REMOVE', text="")
 
-    callbacks = _callback_utils.get_callbacks_from_active_slide(context, callback_list)
+    callbacks = _callback_utils.get_callbacks_from_active_slide(context)
     for cb in callbacks:
         box = layout.box()
         box.label(text=_cb_main.get_list_name(cb))
         _cb_main.draw(cb, context, box)
 
 
-class PSL_PT_Callbacks_On_Enter(bpy.types.Panel):
+class PSL_PT_Callbacks(bpy.types.Panel):
     bl_space_type = "VIEW_3D"
     bl_region_type = "UI"
-    bl_label = "Callbacks - On Enter"
+    bl_label = "Callbacks"
     bl_category = "Power Slide"
     bl_parent_id = "PSL_PT_Slides"
 
     def draw(self, context: bpy.types.Context):
         layout = self.layout
-        _draw_callback_gui(context, layout, "on_enter")
+        _draw_callback_gui(context, layout)

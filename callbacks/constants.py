@@ -15,8 +15,3 @@ CALLBACK_TYPES = (
     (CALLBACK_PLAY_ANIMATION, "Play Animation", "Play the given animation"),
     (CALLBACK_PLAY_GREASE_PENCIL, "Play Grease Pencil", "Play a grease pencil animation"),
 )
-
-# different lists of callbacks that are execute at different points in time
-CALLBACK_LISTS = (
-    ("on_enter", "On Enter", "Executed before the slide is shown"),
-)

@@ -11,7 +11,7 @@ _CLASSES = (
     slide_templates.PSL_PT_Slide_Templates,
     slide_templates.PSL_PT_Slide_Assigned_Templates,
     callbacks.PSL_UL_callbacks,
-    callbacks.PSL_PT_Callbacks_On_Enter,
+    callbacks.PSL_PT_Callbacks,
 )
 
 

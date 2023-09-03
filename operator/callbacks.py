@@ -7,17 +7,15 @@ from ..callbacks import constants as _cb_constants, main as _cb_main
 class PSL_OT_Create_Callback(bpy.types.Operator):
     bl_idname = "psl.create_callback"
     bl_label = "Create Callback"
+    bl_property = "callback_type"
 
-    callback_list : bpy.props.EnumProperty(
-        items=_cb_constants.CALLBACK_LISTS
-    )
     callback_type : bpy.props.EnumProperty(
         items=_cb_constants.CALLBACK_TYPES
     )
 
     def execute(self, context: bpy.types.Context):   
         current_slide = _slide_utils.get_current_slide(context)
-        item = getattr(current_slide.collection, self.callback_list).callbacks.add()
+        item = current_slide.collection.slide_callbacks.callbacks.add()
         item.type = self.callback_type
         _cb_main.create(item)
         for region in context.area.regions:
@@ -26,20 +24,17 @@ class PSL_OT_Create_Callback(bpy.types.Operator):
     
     def invoke(self, context: Context, event: Event):
         wm = context.window_manager
-        return wm.invoke_props_dialog(self)
+        wm.invoke_search_popup(self)
+        return {'FINISHED'}
     
 
 class PSL_OT_Delete_Callback(bpy.types.Operator):
     bl_idname = "psl.delete_callback"
     bl_label = "Delete Callback"
 
-    callback_list : bpy.props.EnumProperty(
-        items=_cb_constants.CALLBACK_LISTS
-    )
-
     def execute(self, context: bpy.types.Context):
         current_slide = _slide_utils.get_current_slide(context)
-        callback_list = getattr(current_slide.collection, self.callback_list)
+        callback_list = current_slide.collection.slide_callbacks
         callback_list.callbacks.remove(callback_list.active_index)
         if callback_list.active_index > 0 and callback_list.active_index >= len(callback_list.callbacks):
             callback_list.active_index -= 1

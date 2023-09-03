@@ -17,15 +17,11 @@ def register_operators():
         bpy.utils.register_class(c)
 
     bpy.types.Collection.template_data = bpy.props.PointerProperty(type=slide_template.PSL_TemplateGroup)
-
-    for enum_item in _cb_constants.CALLBACK_LISTS:
-        setattr(bpy.types.Collection, enum_item[0], bpy.props.PointerProperty(type=callback.PSL_CallbackGroup))
+    bpy.types.Collection.slide_callbacks = bpy.props.PointerProperty(type=callback.PSL_CallbackGroup)
 
 
 def unregister_operators():
-    for enum_item in reversed(_cb_constants.CALLBACK_LISTS):
-        delattr(bpy.types.Collection, enum_item[0])
-
+    del bpy.types.Collection.slide_callbacks
     del bpy.types.Collection.template_data
 
     for c in reversed(_CLASSES):
