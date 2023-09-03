@@ -78,7 +78,7 @@ def active_slide_changed(context: bpy.types.Context):
     if current_index < 0 or current_index >= len(slide_collection.children):
         return
     
-    previous_index = context.scene.previous_slide
+    previous_index = context.scene.slide_index_buffer
     _cleanup_slide_callbacks(context, slide_collection.children[previous_index])
 
     slide = slide_collection.children[current_index]
@@ -87,7 +87,7 @@ def active_slide_changed(context: bpy.types.Context):
     context.view_layer.active_layer_collection = slide
     _execute_slide_callbacks(slide, context)
 
-    context.scene.previous_slide = current_index
+    context.scene.slide_index_buffer = current_index
 
 
 def next_slide(context: bpy.types.Context):

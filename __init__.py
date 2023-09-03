@@ -24,7 +24,7 @@ def _active_slide_changed(self, context):
 
 def register():
     # needed because the slide update callback needs to cleanup the previous slide
-    bpy.types.Scene.previous_slide = bpy.props.IntProperty()
+    bpy.types.Scene.slide_index_buffer = bpy.props.IntProperty()
     bpy.types.Scene.active_slide = bpy.props.IntProperty(
         update=_active_slide_changed
     )
@@ -37,7 +37,7 @@ def register():
 def unregister():
     del bpy.types.Scene.active_slide_template
     del bpy.types.Scene.active_slide
-    del bpy.types.Scene.previous_slide
+    del bpy.types.Scene.slide_index_buffer
 
     for m in reversed(_MODULES):
         m.unregister_operators()
